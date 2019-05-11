@@ -1,4 +1,5 @@
-# algorithms
+# Algorithms
+
 Example of algorithms in Java
 
 ## Quick Union
