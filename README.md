@@ -4,9 +4,9 @@ Example of algorithms in Java
 
 ## Support Files
 
-**Link:** [Linux](https://lift.cs.princeton.edu/java/linux/)
+[Linux](https://lift.cs.princeton.edu/java/linux/)
 
-**Link:** [Mac](https://lift.cs.princeton.edu/java/mac/lift-java.pkg)
+[Mac](https://lift.cs.princeton.edu/java/mac/lift-java.pkg)
 
 ## Quick Union
 
