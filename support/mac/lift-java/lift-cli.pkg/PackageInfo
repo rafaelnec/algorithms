@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pkg-info overwrite-permissions="true" relocatable="false" identifier="edu.princeton.cs.lift.cli" postinstall-action="none" version="1.31" format-version="2" generator-version="InstallCmds-673 (18C54)" install-location="/" auth="root">
+    <payload numberOfFiles="186" installKBytes="68674"/>
+    <bundle-version/>
+    <upgrade-bundle/>
+    <update-bundle/>
+    <atomic-update-bundle/>
+    <strict-identifier/>
+    <relocate/>
+    <scripts>
+        <preinstall file="./preinstall"/>
+        <postinstall file="./postinstall"/>
+    </scripts>
+</pkg-info>

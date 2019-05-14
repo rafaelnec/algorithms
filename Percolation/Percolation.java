@@ -1,4 +1,4 @@
-/* *****************************************************************************
+/******************************************************************************
  *  Name:    Rafael Neves Moraes
  *
  *  Description:  Percolation system using an n-by-n grid of sites.
@@ -19,30 +19,33 @@
  *                12   5
  *                 9   5
  *                 5   9
- **************************************************************************** */
+ ******************************************************************************/
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Stopwatch;
 
 public class Percolation {
 
-    private final WeightedQuickUnionUF wqu;
+    private final WeightedQuickUnionUF wqu, wqd;
     private final int nt; // Number of elements
     private int os; // Number of open sites
     private boolean[] op; // Is Open?
     private boolean p; // Is Percolate?
+    private int tc; // Top component
+
     
     // create n-by-n grid, with all sites blocked
     public Percolation(int n) {
         if (n <= 0)
             throw new IllegalArgumentException("N must be gran than 0!");
 
-        wqu = new WeightedQuickUnionUF((n * n) + (n * 2));
+        wqu = new WeightedQuickUnionUF(n * n + 1);
+        wqd = new WeightedQuickUnionUF(n * n + 1);
         op  = new boolean[n * n];
         os  = 0;
         nt  = n;
-        p = false;
-
+        p   = false;
+        tc  = 0;
 
     }                
 
@@ -60,27 +63,33 @@ public class Percolation {
             op[idx] = true;
 
             if (row == 1)
-                wqu.union(row - 1, idxWqu);
+                wqu.union(0, idxWqu);
 
-            if (row == nt) {
-                wqu.union(row - 1, idxWqu);
-                ;
-            }
+            if (row == nt)
+                wqd.union(0, idxWqu);
 
-            wqu.union(col - 1 + nt, idxWqu);
             if (col > 1 && op[idx - 1])
-                wqu.union(idxWqu, idxWqu - 1);
+                union(idxWqu, idxWqu - 1);
             if (col < nt && op[idx + 1])
-                wqu.union(idxWqu, idxWqu + 1);
+                union(idxWqu, idxWqu + 1);
             if (row > 1 && op[idx - nt])
-                wqu.union(idxWqu, idxWqu - nt);
+                union(idxWqu, idxWqu - nt);
             if (row < nt && op[idx + nt])
-                wqu.union(idxWqu, idxWqu + nt);
+                union(idxWqu, idxWqu + nt);
+
+            if (!p && wqd.connected(0, idxWqu) && wqu.connected(0, idxWqu))
+                p = true;
+
+            tc = wqu.find(0);
 
         }
 
     } 
 
+    private void union(int x, int y) {
+        wqu.union(x, y);
+        wqd.union(x, y);
+    }
     
     // is site (row, col) open?
     public boolean isOpen(int row, int col) {
@@ -91,7 +100,7 @@ public class Percolation {
     // is site (row, col) full?
     public boolean isFull(int row, int col) {
         this.validateRowCol(row, col);
-        return wqu.find(getIndexWqu(row, col)) == wqu.find(0);
+        return wqu.find(getIndexWqu(row, col)) == tc;
     }      
 
     // number of open sites
@@ -101,7 +110,7 @@ public class Percolation {
 
     // does the system percolate?    
     public boolean percolates() {
-        return wqu.connected(0, nt - 1);
+        return p;
     } 
 
     // validate row and col
@@ -119,7 +128,7 @@ public class Percolation {
 
     // get row index
     private int getIndexWqu(int row, int col) {
-        return (nt * (row - 1)) + col - 1 + (nt * 2);
+        return (nt * (row - 1)) + col;
     }
 
     // test client (optional)

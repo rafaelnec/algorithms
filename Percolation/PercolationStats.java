@@ -17,33 +17,37 @@ public class PercolationStats {
 
     private static final double CONFIDENCE_INDEX = 1.96;
 
-    int t; // Trials
-    double[] x;
+    private final int t; // Trials
+    private final double[] x;
+    private double mean;
+    private double stddev;
 
     // perform trials independent experiments on an n-by-n grid
     public PercolationStats(int n, int trials) {
 
-        if(n <= 0 || trials <= 0)
+        if (n <= 0 || trials <= 0)
             throw new IllegalArgumentException("n and trials must be gran than 0!");
 
         t = trials;
         x = new double[trials];
+        mean = Double.NaN;
+        stddev = Double.NaN;
 
-        float nn = n * n; 
+        double nn = n * n; 
 
-        for(int i = 0; i < trials; i++) {
+        for (int i = 0; i < trials; i++) {
 
             Percolation p = new Percolation(n);
 
-            while(p.percolates() == false) {
+            while (!p.percolates()) {
                 int rone = StdRandom.uniform(1, n + 1);
                 int rtwo = StdRandom.uniform(1, n + 1);
-                if(p.isOpen(rone, rtwo))
+                if (p.isOpen(rone, rtwo))
                     continue;
                 p.open(rone, rtwo);
             }
 
-            float op = p.numberOfOpenSites();
+            double op = p.numberOfOpenSites();
             x[i] = op / nn;
             
         }
@@ -52,12 +56,16 @@ public class PercolationStats {
 
     // sample mean of percolation threshold  
     public double mean() {
-        return StdStats.mean(x);
+        if (Double.isNaN(mean))
+            mean = StdStats.mean(x);
+        return mean;
     }              
 
     // sample standard deviation of percolation threshold      
     public double stddev() {
-        return StdStats.stddev(x);
+        if (Double.isNaN(stddev))
+            stddev = StdStats.stddev(x);
+        return stddev;
     }       
 
     // low  endpoint of 95% confidence interval                 
@@ -74,21 +82,16 @@ public class PercolationStats {
     public static void main(String[] args) {
 
         Stopwatch sw = new Stopwatch();
-        Runtime rt  = Runtime.getRuntime();
-        long rtm = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
         
         int n = Integer.parseInt(args[0]);
         int trials = Integer.parseInt(args[1]);
         PercolationStats ps = new PercolationStats(n, trials);
 
-        long memory = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() - rtm) /(1024 * 1024);
-
         System.out.println(String.format("mean: %s", ps.mean()));
         System.out.println(String.format("stddev: %s", ps.stddev()));
         System.out.println(String.format("95%% confidence interval: [%s,%s]", 
             ps.confidenceLo(), ps.confidenceHi()));
-        System.out.println(String.format("Total memory usaged: %sMB", memory));
-        System.out.println(String.format("Running time: %ss",sw.elapsedTime()));
+        System.out.println(String.format("Running time: %ss", sw.elapsedTime()));
 
     }   
 
