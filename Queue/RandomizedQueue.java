@@ -1,3 +1,14 @@
+/* *****************************************************************************
+ *  Name:    Rafael Neves Moraes
+ *
+ *  Description:  RandomizedQueue algorithm.
+ *
+ *  Written:       5/06/2019
+ *
+ *  % javac RandomizedQueue.java
+ *  % java RandomizedQueue
+ *
+ **************************************************************************** */
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdRandom;
