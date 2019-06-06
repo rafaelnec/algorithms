@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<installer-gui-script minSpecVersion="2">
+    <title>LIFT-CS Java Programming Environment</title>
+    <background file="pu-shield.pdf" scaling="fit" alignment="bottomleft"/>
+    <!-- <welcome file="welcome.html"/>        -->
+    <!-- <readme file="readme.html"/>          -->
+    <license file="license.html" mime-type="text/html"/>
+    <!-- <conclusion file="conclusion.html"/>  -->
+    <options customize="allow" require-scripts="false"/>
+    
+             hostArchitectures="x86_64"/&gt;
+
+    <!-- 10.8 needed for Java 8; 10.7 needed for Sublime; 10.8.3 needed for IntelliJ (64-bit only) -->
+    <allowed-os-versions>
+        <os-version min="10.8"/>
+    </allowed-os-versions>
+    <choices-outline>
+        <line choice="choice1"/>
+        <line choice="choice2"/>
+        <line choice="choice3"/>
+        <line choice="choice4"/>
+    </choices-outline>
+    <choice id="choice1" enabled="true" visible="false" start_selected="true" title="Preflight">
+        <pkg-ref id="edu.princeton.cs.lift.preflight"/>
+    </choice>
+    <choice id="choice2" enabled="true" visible="true" start_selected="true" title="Open JDK 10">
+        <pkg-ref id="edu.princeton.cs.lift.jdk"/>
+    </choice>
+    <choice id="choice3" enabled="true" visible="true" start_selected="true" title="Command-Line Tools">
+        <pkg-ref id="edu.princeton.cs.lift.cli"/>
+    </choice>
+    <choice id="choice4" enabled="true" visible="true" start_selected="true" title="IntelliJ IDEA Community Edition 2018.2">
+        <pkg-ref id="edu.princeton.cs.lift.intellij"/>
+    </choice>
+    <!--
+    <choice id="choice4"
+            enabled="true"
+            visible="true"
+            start_selected="false"
+            title="Sublime Text 3">
+            <pkg-ref id="edu.princeton.cs.lift.sublime"/>
+    </choice>
+
+    <choice id="choice5"
+            enabled="true"
+            visible="true"
+            start_selected="false"
+            title="DrJava">
+            <pkg-ref id="edu.princeton.cs.lift.drjava"/>
+    </choice>
+-->
+    <pkg-ref id="edu.princeton.cs.lift.preflight" version="1.31" onConclusion="none" installKBytes="0">#lift-preflight.pkg</pkg-ref>
+    <pkg-ref id="edu.princeton.cs.lift.cli" version="1.31" onConclusion="none" installKBytes="68674">#lift-cli.pkg</pkg-ref>
+    <pkg-ref id="edu.princeton.cs.lift.jdk" version="10.0.2" onConclusion="none" installKBytes="327387">#lift-jdk.pkg</pkg-ref>
+    <pkg-ref id="edu.princeton.cs.lift.intellij" version="2018.2.2" onConclusion="none">#lift-intellij.pkg</pkg-ref>
+    <!--
+    <pkg-ref id="edu.princeton.cs.lift.sublime"
+             version="1.31"
+             onConclusion="none">lift-sublime.pkg</pkg-ref>
+
+    <pkg-ref id="edu.princeton.cs.lift.drjava"
+             version="1.31"
+             onConclusion="none">lift-drjava.pkg</pkg-ref>
+-->
+    <!-- must close IntelliJ before installing IntelliJ                    -->
+    <!-- to determine app id: osascript -e 'id of app "IntelliJ IDEA CE"'  -->
+    <pkg-ref id="edu.princeton.cs.lift.intellij" installKBytes="1037897">
+        <must-close>
+            <app id="com.jetbrains.intellij.ce"/>
+        </must-close>
+        <bundle-version>
+            <bundle CFBundleShortVersionString="2018.2.2" CFBundleVersion="IC-182.4129.33" id="com.jetbrains.intellij.ce" path="Applications/IntelliJ IDEA CE.app"/>
+        </bundle-version>
+    </pkg-ref>
+    <!-- must close Sublime Text 3 before installing Sublime           -->
+    <!-- to determine app id: osascript -e 'id of app "Sublime Text"'  -->
+    <!--
+    <pkg-ref id="edu.princeton.cs.lift.sublime">
+        <must-close>
+            <app id="com.sublimetext.3" />
+        </must-close>
+    </pkg-ref>
+-->
+    <!-- must close DrJava before installing DrJava -->
+    <!--
+    <pkg-ref id="edu.princeton.cs.lift.drjava">
+        <must-close>
+            <app id="edu.rice.cs.drjava" />
+        </must-close>
+    </pkg-ref>
+-->
+    <!-- can install only in root directory of system volume           -->
+    <!-- Apple recommends using <domains> instead of <rootVolumeOnly>  -->
+    <!-- but doesn't use it in their products.                         -->
+    <options rootVolumeOnly="true"/>
+    <!--
+    <domains enable_currentUserHome="false"
+             enable_anywhere="false"
+             enable_localSystem="true"/>
+-->
+    <pkg-ref id="edu.princeton.cs.lift.preflight">
+        <bundle-version/>
+    </pkg-ref>
+    <pkg-ref id="edu.princeton.cs.lift.jdk">
+        <bundle-version/>
+    </pkg-ref>
+    <pkg-ref id="edu.princeton.cs.lift.cli">
+        <bundle-version/>
+    </pkg-ref>
+</installer-gui-script>
