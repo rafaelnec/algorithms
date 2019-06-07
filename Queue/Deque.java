@@ -13,11 +13,11 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 public class Deque<Item> implements Iterable<Item> {
 
-    Node F;
-    Node L;   
-    int S = 0;
+    private Node F;
+    private Node L;   
+    private int S = 0;
     
-    class Node {
+    private class Node {
         Item item = null;
         Node next = null;
         Node before = null;

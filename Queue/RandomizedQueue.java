@@ -18,7 +18,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	private int S = 0;
 	private int N;
 
-	class Node {
+	private class Node {
 		Item item;
 		int next() {
 			return getRandom();
