@@ -14,9 +14,9 @@ import java.util.NoSuchElementException;
 public class DequeArray<Item> implements Iterable<Item> {
 
     private Item[] s;   
-    private int L = 0;
-    private int R = 1;
-    private int S = 0;
+    private int left = 0;
+    private int rigth = 1;
+    private int size = 0;
     
     // construct an empty deque
     public DequeArray() {
@@ -25,50 +25,50 @@ public class DequeArray<Item> implements Iterable<Item> {
 
     // is the deque empty?
     public boolean isEmpty() {
-        return S == 0;
+        return size == 0;
     }               
 
     // return the number of items on the deque
     public int size() {
-        return S;
+        return size;
     }
 
     // add the item to the front
     public void addFirst(Item item) {
         if (item == null) throw new IllegalArgumentException();
-        if (L == -1) resizeLeft(2 * s.length);
-        if (L == R) R++;
-        s[L--] = item;
-        S++;
+        if (left == -1) resizeLeft(2 * s.length);
+        if (left == rigth) rigth++;
+        s[left--] = item;
+        size++;
     }          
 
     // add the item to the end
     public void addLast(Item item) {
         if (item == null) throw new IllegalArgumentException();
-        if (R == s.length) resizeRight(2 * s.length);
-        if (L == R) L--;
-        s[R++] = item;
-        S++;
+        if (rigth == s.length) resizeRight(2 * s.length);
+        if (left == rigth) left--;
+        s[rigth++] = item;
+        size++;
     }           
 
     // remove and return the item from the front
     public Item removeFirst() {
-        if (S == 0) throw new NoSuchElementException();
-        if (L == R) R--;
-        S--;
-        s[++L] = null;
-        if (L == 3 * s.length/8) resizeLeft(3 * s.length/4);
-        return s[L];
+        if (size == 0) throw new NoSuchElementException();
+        if (left == rigth) rigth--;
+        size--;
+        s[++left] = null;
+        if (left == 3 * s.length/8) resizeLeft(3 * s.length/4);
+        return s[left];
     }                
 
     // remove and return the item from the end
     public Item removeLast() {
-        if (S == 0) throw new NoSuchElementException();
-        if (L == R) L++;
-        S--;
-        s[--R] = null;
-        if (R == 5 * s.length/8) resizeRight(3 * s.length/4);
-        return s[R];
+        if (size == 0) throw new NoSuchElementException();
+        if (left == rigth) left++;
+        size--;
+        s[--rigth] = null;
+        if (rigth == 5 * s.length/8) resizeRight(3 * s.length/4);
+        return s[rigth];
     }                 
 
     // return an iterator over items in order from front to end
@@ -77,9 +77,9 @@ public class DequeArray<Item> implements Iterable<Item> {
     }     
 
     private class ArrayIterator implements Iterator<Item>    { 
-        private int i = L + 1;
+        private int i = left + 1;
         public void remove()        { throw new UnsupportedOperationException(); } 
-        public boolean hasNext()    { return i < R; }        
+        public boolean hasNext()    { return i < rigth; }        
         public Item next()          { 
             if (hasNext() == false) throw new NoSuchElementException(); 
             return s[i++]; 
@@ -92,12 +92,12 @@ public class DequeArray<Item> implements Iterable<Item> {
         if (capacity < 2) return;
         Item[] copy = (Item[]) new Object[capacity];
         int I = 0;
-        if (isLeft) I = (R+L)/2;
-        for (int i = (L+1); i < R; i++) 
+        if (isLeft) I = (rigth+left)/2;
+        for (int i = (left+1); i < rigth; i++) 
             copy[i + I] = s[i];
         s = copy;
-        L += I;
-        R += I;
+        left += I;
+        rigth += I;
     }
 
     // unit testing (optional)

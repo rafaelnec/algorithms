@@ -16,19 +16,16 @@ public class Permutation {
 
    public static void main(String[] args) {
 
-        int P = Integer.valueOf(args[0]);
+        int count = new Integer(args[0]).intValue();
         RandomizedQueue<String> deq = new RandomizedQueue<>();
 
-        while (!StdIn.isEmpty()) {
+        while (!StdIn.isEmpty()) 
             deq.enqueue(StdIn.readString());
-        }
 
         Iterator<String> it = deq.iterator();
-        while(it.hasNext()) {
+        for (int i = 0; i < count; i++) 
             System.out.println(it.next());
-            if(--P == 0) break;
-        }
-
+        
    }
 
 }
