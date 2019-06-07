@@ -16,7 +16,7 @@ public class Permutation {
 
    public static void main(String[] args) {
 
-        int count = new Integer(args[0]).intValue();
+        int count = Integer.parseInt(args[0]);
         RandomizedQueue<String> deq = new RandomizedQueue<>();
 
         while (!StdIn.isEmpty()) 

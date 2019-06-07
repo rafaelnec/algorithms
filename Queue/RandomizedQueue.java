@@ -15,8 +15,7 @@ import edu.princeton.cs.algs4.StdRandom;
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private Item[] s;
-    private int S = 0;
-    private int N;
+    private int size = 0;
 
     // construct an empty randomized queue  
     public RandomizedQueue() {
@@ -25,37 +24,44 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // is the randomized queue empty?             
     public boolean isEmpty() {
-        return S == 0;
+        return size == 0;
     }                
 
     // return the number of items on the randomized queue
     public int size() {
-        return S;
+        return size;
     }              
 
     // add the item         
     public void enqueue(Item item) {
-        if (N == s.length) resize(2 * s.length);
-        int iaux = getRandom();
-        Item vaux = item;
-        if (N > 0) { 
-            vaux = s[iaux]; 
-            s[iaux] = item; 
-        }
-        s[N++] = vaux;
-        S++;
+        if (item == null) throw new IllegalArgumentException();
+        if (size == s.length) resize(2 * s.length);
+        s[size++] = item;
     }
 
     // remove and return a random item           
     public Item dequeue() {
-        if (N > 0 && N == s.length/4) resize(s.length/2);
-        S--;
-        return s[--N];
+        if (size == 0) throw new NoSuchElementException();
+        if (size == s.length/4) resize(s.length/2);
+        Item item;
+        int index;
+        if (size > 0) {
+            int i = StdRandom.uniform(size);
+            index = --size;
+            item = s[i];
+            s[i] = s[index];
+        } else {
+            index = --size;
+            item = s[index];
+        }
+        s[index] = null;
+        return item;
     }                 
 
     // return a random item (but do not remove it)   
     public Item sample() {
-        return s[getRandom()];
+        if (size == 0) throw new NoSuchElementException();
+        return s[StdRandom.uniform(size)];
     }               
 
     // return an independent iterator over items in random order      
@@ -64,23 +70,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }    
 
     private class ArrayIterator implements Iterator<Item> { 
-        private final Item[] si;
         private int i = 0;
-        public ArrayIterator() {
-            si = (Item[]) new Object[N];
-            int aux = 0;
-            Item vaux = s[0];
-            for (int j = 0; j < N; j++) {
-                if (j > 0) {
-                    aux = getRandom(j);
-                    vaux = si[aux];
-                } 
-                si[aux] = s[j];
-                si[j] = vaux;
-            } 
+        private final Item[] si;
+        public ArrayIterator() { 
+            si = (Item[]) new Object[size];
+            for (int i = 0; i < size; i++) 
+                si[i] = s[i];
+            StdRandom.shuffle(si, 0, size);
         }
         public void remove()        { throw new UnsupportedOperationException(); } 
-        public boolean hasNext()    { return i < N; }        
+        public boolean hasNext()    { return i < size; }        
         public Item next()          { 
             if (!hasNext()) throw new NoSuchElementException(); 
             return si[i++]; 
@@ -89,16 +88,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private void resize(int capacity) {
         Item[] copy = (Item[]) new Object[capacity];
-        for (int i = 0; i < N; i++) 
+        for (int i = 0; i < size; i++) 
             copy[i] = s[i];
         s = copy;
-    }
-
-    private int getRandom() { return getRandom(N); }
-
-    private int getRandom(int max) {
-        if (max == 0) return 0;
-        else return StdRandom.uniform(max);
     }
 
     // unit testing (optional)
@@ -118,19 +110,22 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         deq.enqueue(334);
         deq.enqueue(235);
 
+        deq.enqueue(0);
+        deq.enqueue(1);
         deq.dequeue();
 
         
 
         System.out.println("-----------------------");
         Iterator<Integer> it = deq.iterator();
+        Iterator<Integer> it2 = deq.iterator();
         while (it.hasNext()) {
             System.out.print(it.next() + " | ");
         }
         System.out.println();
-        it = deq.iterator();
-        while (it.hasNext()) {
-            System.out.print(it.next() + " | ");
+        
+        while (it2.hasNext()) {
+            System.out.print(it2.next() + " | ");
         }
         System.out.println();
         System.out.println("Random: " + deq.sample());
