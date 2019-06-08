@@ -25,3 +25,29 @@ Example of algorithms in Java
 javac-algs4 PercolationVisualizer.java && java-algs4 PercolationVisualizer examples/input20.txt 
 javac-algs4 PercolationStats.java && java-algs4 PercolationStats 200 100
 ```
+
+## Queue
+
+**Description:** A Queue is a linear structure which follows a particular order in which the operations are performed. The order is First In First Out (FIFO).
+
+**Link:** [Queue](/Queue/)
+
+**Command:**
+```sh
+javac-algs4 Queue.java && java-algs4 Queue
+javac-algs4 RandomizedQueue.java && java-algs4 RandomizedQueue
+javac-algs4 Permutation.java && java-algs4 Permutation 4 < examples/distinct.txt
+```
+
+## Stack
+
+**Description:** Stack is a linear data structure which follows a particular order in which the operations are performed. The order may be LIFO(Last In First Out) or FILO(First In Last Out).
+
+**Link:** [Stack](/Stack/)
+
+**Command:**
+```sh
+javac-algs4 Queue.java && java-algs4 Queue
+javac-algs4 RandomizedQueue.java && java-algs4 RandomizedQueue
+javac-algs4 Permutation.java && java-algs4 Permutation 4 < examples/distinct.txt
+```
