@@ -30,7 +30,7 @@ javac-algs4 PercolationStats.java && java-algs4 PercolationStats 200 100
 
 **Description:** A Queue is a linear structure which follows a particular order in which the operations are performed. The order is First In First Out (FIFO).
 
-**Link:** [Queue](/Stack/)
+**Link:** [Queue](/Queue/)
 
 **Command:**
 ```sh
@@ -43,7 +43,7 @@ javac-algs4 Permutation.java && java-algs4 Permutation 4 < examples/distinct.txt
 
 **Description:** Stack is a linear data structure which follows a particular order in which the operations are performed. The order may be LIFO(Last In First Out) or FILO(First In Last Out).
 
-**Link:** [Stack](/Queue/)
+**Link:** [Stack](/Stack/)
 
 **Command:**
 ```sh
