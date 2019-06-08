@@ -1,3 +1,13 @@
+/*  Name:    Rafael Neves Moraes
+ *
+ *  Description:  Queue with Stack algorithm.
+ *
+ *  Written:       5/06/2019
+ *
+ *  % javac QueueWithStack.java
+ *  % java QueueWithStack
+ *
+ **************************************************************************** */
 public class QueueWithStack<Item>
 {
 	private Stack<Item> stackPush = null;

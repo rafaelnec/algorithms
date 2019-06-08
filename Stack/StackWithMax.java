@@ -1,3 +1,13 @@
+/*  Name:    Rafael Neves Moraes
+ *
+ *  Description:  Stack algorithm Object Implementation.
+ *
+ *  Written:       5/06/2019
+ *
+ *  % javac StackWithMax.java
+ *  % java StackWithMax
+ *
+ **************************************************************************** */
 public class StackWithMax
 {
 

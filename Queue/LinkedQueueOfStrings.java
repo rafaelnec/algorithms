@@ -1,3 +1,14 @@
+/* *****************************************************************************
+ *  Name:    Rafael Neves Moraes
+ *
+ *  Description:  Queue algorithm object implementation.
+ *
+ *  Written:       5/06/2019
+ *
+ *  % javac LinkedQueueOfStrings.java
+ *  % java LinkedQueueOfStrings
+ *
+ **************************************************************************** */
 public class LinkedQueueOfStrings
 {
     private Node first, last;

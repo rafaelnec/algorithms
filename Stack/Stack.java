@@ -1,3 +1,15 @@
+/* *****************************************************************************
+ *  Name:    Rafael Neves Moraes
+ *
+ *  Description:  Stack algorithm Object Implementation.
+ *
+ *  Written:       5/06/2019
+ *
+ *  % javac Stack.java
+ *  % java Stack
+ *  Proposition.  A stack with N items uses~ 40 N bytes.
+ *
+ **************************************************************************** */
 public class Stack<Item>
 {
 
